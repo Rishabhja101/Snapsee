@@ -2,19 +2,17 @@ import React from 'react';
 
 class LoginPage extends React.Component {
     componentDidMount() {
-        // Load the SDK asynchronously
-        (function (d, s, id) {
-            var js, sjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "https://sdk.snapkit.com/js/v1/login.js";
-            sjs.parentNode.insertBefore(js, sjs);
-        }(document, 'script', 'loginkit-sdk'));
+        const script = document.createElement("script");
+
+        script.src = "https://sdk.snapkit.com/js/v1/login.js";
+        script.async = true;
+
+        document.body.appendChild(script);
 
         window.snapKitInit = function () {
             var loginButtonIconId = 'login-button-target';
             // Mount Login Button
-            snap.loginkit.mountButton(loginButtonIconId, {
+            window.snap.loginkit.mountButton(loginButtonIconId, {
               clientId: '2fc5fe99-32c8-494c-b1f8-612b96613983',
               redirectURI: '/',
               scopeList: [
@@ -22,7 +20,7 @@ class LoginPage extends React.Component {
                 'user.bitmoji.avatar',
               ],
               handleResponseCallback: function() {
-                snap.loginkit.fetchUserInfo()
+                window.snap.loginkit.fetchUserInfo()
                   .then(data => console.log('User info:', data));
               },
             });
