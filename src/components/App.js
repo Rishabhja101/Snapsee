@@ -33,7 +33,7 @@ class App extends React.Component {
             ? <MainPage data={this.state.data}/>
             : <Redirect to="/login" />
         )} />
-        
+        <Route path="*" render={() => <Redirect to="/" />} />
       </BrowserRouter>
     );
   }
