@@ -14,16 +14,20 @@ class MainPage extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.postFormOnSubmit = this.postFormOnSubmit.bind(this);
         this.handleImageChange = this.handleImageChange.bind(this);
-        this.API_URL = "https://snapsee.herokuapp.com/";
+        this.API_URL = "http://snapsee.herokuapp.com";
     }
 
     api(path) {
         return `${this.API_URL}/${path}`
     }
 
+    getStrippedBitmojiURL() {
+        // not sure if this is lazy sorry
+        return this.props.data.data.me.bitmoji.avatar.split('?')[0];
+    }
+
     componentWillMount(){
-        //gets all the users
-        Request.get(this.api(`user/get/?bitmoji_url=${this.props.data.data.me.bitmoji.avatar}`))
+        Request.get(this.api(`user/get/?bitmoji_url=${this.getStrippedBitmojiURL()}`))
         .then((res) => {
             if (res.body.length > 0) {
                 this.setState({
@@ -36,21 +40,27 @@ class MainPage extends React.Component {
     postFormOnSubmit(event){
         event.preventDefault();
 
-        console.log(this.props.data.data.me.displayName);
-        console.log(this.props.data.data.me.bitmoji.avatar);
-        console.log(this.state.snap_username);
-        console.log(this.state.personal_photo);
+        //console.log(this.props.data.data.me.displayName);
+        //console.log(this.getStrippedBitmojiURL());
+        //console.log(this.state.snap_username);
+        //console.log(this.state.personal_photo);
 
         //post new user to api
         Request.post(this.api('user/add'))
             .set('Content-Type', 'application/json')
             .send({
                 name: this.props.data.data.me.displayName,
-                bitmoji_url: this.props.data.data.me.bitmoji.avatar,
+                bitmoji_url: this.getStrippedBitmojiURL(),
                 username: this.state.snap_username,
-                image: this.state.personal_photo
+                image: null
             })
-            .then(() => console.log("success!"));
+            .then(() => Request.post(this.api('user/update'))
+                .field('username', this.state.snap_username)
+                .attach('image', this.state.personal_photo)
+                .then(() => {})
+            );
+        
+        
         
         event.target.reset();
         //make api post request for:
