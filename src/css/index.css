@@ -1,0 +1,16 @@
+body, html {
+    color: white;
+    background-color: #444;
+    background-image: url("../images/color19.png");
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+}
+
+.form-group {
+    display: block;
+    margin: 0 auto;
+}
+
+.lead {
+    font-size: 32px;
+}
