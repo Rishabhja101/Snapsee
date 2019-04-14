@@ -11,7 +11,7 @@ os.chdir(dname)
 images = os.listdir('faces/')
 
 # load your image
-image_to_be_matched = face_recognition.load_image_file('2.jpg')
+image_to_be_matched = face_recognition.load_image_file('Kyle.jpg')
 
 # encoded the loaded image into a feature vector
 image_to_be_matched_encoded = face_recognition.face_encodings(image_to_be_matched)[0]
