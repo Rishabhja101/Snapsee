@@ -14,26 +14,22 @@ class MainPage extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.postFormOnSubmit = this.postFormOnSubmit.bind(this);
         this.handleImageChange = this.handleImageChange.bind(this);
+        this.API_URL = "https://snapsee.herokuapp.com/";
+    }
+
+    api(path) {
+        return `${this.API_URL}/${path}`
     }
 
     componentWillMount(){
         //gets all the users
-        let url = "https://glacial-scrubland-15145.herokuapp.com/users"
-        Request.get(url)
+        Request.get(this.api(`user/get/?bitmoji_url=${this.props.data.data.me.bitmoji.avatar}`))
         .then((res) => {
-            this.setState({
-                users: res
-            }, () => {
-                console.log(this.state.users);
-                console.log(this.state.users.body);
-                for(let user of this.state.users.body) {
-                    if(user.bitmoji_url === this.props.data.data.me.bitmoji.avatar){
-                        this.setState({
-                            isNewUser: false
-                        });
-                    }
-                }
-            });
+            if (res.body.length > 0) {
+                this.setState({
+                    isNewUser: false
+                });
+            }
         }); 
     }
 
@@ -46,8 +42,7 @@ class MainPage extends React.Component {
         console.log(this.state.personal_photo);
 
         //post new user to api
-        let url = "https://glacial-scrubland-15145.herokuapp.com/users"
-        Request.post(url)
+        Request.post(this.api('user/add'))
             .set('Content-Type', 'application/json')
             .send({
                 name: this.props.data.data.me.displayName,
@@ -55,7 +50,7 @@ class MainPage extends React.Component {
                 username: this.state.snap_username,
                 image: this.state.personal_photo
             })
-            .then(res => console.log("success!"));
+            .then(() => console.log("success!"));
         
         event.target.reset();
         //make api post request for:
