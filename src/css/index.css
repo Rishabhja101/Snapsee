@@ -7,3 +7,7 @@ body, html {
     display: block;
     margin: 0 auto;
 }
+
+.lead {
+    font-size: 32px;
+}

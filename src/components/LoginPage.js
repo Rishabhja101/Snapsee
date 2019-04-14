@@ -15,7 +15,7 @@ class LoginPage extends React.Component {
             // Mount Login Button
             window.snap.loginkit.mountButton(loginButtonIconId, {
               clientId: '2fc5fe99-32c8-494c-b1f8-612b96613983',
-              redirectURI: /*'http://localhost:3000/login'*/'https://snapsee.net/login',
+              redirectURI: 'http://localhost:3000/login'/*'https://snapsee.net/login'*/,
               scopeList: [
                 'user.display_name',
                 'user.bitmoji.avatar',
@@ -31,8 +31,8 @@ class LoginPage extends React.Component {
     render() {
         return (
           <div className="text-center">
-            <h1 className="display-2">Snapsee</h1>
-            <h2 className="lead mb-3">One click snap adding.</h2>
+            <img src="https://66.media.tumblr.com/1844b1112b107102601a6c300de4e37f/tumblr_ppxs61zEAB1yn6gjno1_540.png" alt="snapsee logo banner" style={{width: "100vw"}} />
+            <h2 className="lead my-4">One click snap adding.</h2>
             <div id="login-button-target"/>
           </div>
         );
