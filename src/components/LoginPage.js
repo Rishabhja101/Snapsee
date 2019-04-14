@@ -15,7 +15,7 @@ class LoginPage extends React.Component {
             // Mount Login Button
             window.snap.loginkit.mountButton(loginButtonIconId, {
               clientId: '2fc5fe99-32c8-494c-b1f8-612b96613983',
-              redirectURI: 'http://localhost:3000/login'/*'https://snapsee.net/login'*/,
+              redirectURI: /*'http://localhost:3000/login'*/'https://snapsee.net/login',
               scopeList: [
                 'user.display_name',
                 'user.bitmoji.avatar',
