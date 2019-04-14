@@ -18,26 +18,23 @@ class MainPage extends React.Component {
 
     componentWillMount(){
         //gets all the users
-        let url = "/user/get"
+        let url = "https://glacial-scrubland-15145.herokuapp.com/users"
         Request.get(url)
         .then((res) => {
             this.setState({
                 users: res
+            }, () => {
+                console.log(this.state.users);
+                console.log(this.state.users.body);
+                for(let user of this.state.users.body) {
+                    if(user.bitmoji_url === this.props.data.data.me.bitmoji.avatar){
+                        this.setState({
+                            isNewUser: false
+                        });
+                    }
+                }
             });
-        });
-
-        //gets the specific user's info from the api
-        url = "/user/get/username"
-        Request.get(url)
-        .set("bitmoji_url", this.props.data.data.me.bitmoji.avatar)
-        .then((res) => {
-            //TODO:
-            // if response doesn't return anything then set isNewUser = true
-
-            console.log(res);
-        })
-
-
+        }); 
     }
 
     postFormOnSubmit(event){
@@ -47,6 +44,18 @@ class MainPage extends React.Component {
         console.log(this.props.data.data.me.bitmoji.avatar);
         console.log(this.state.snap_username);
         console.log(this.state.personal_photo);
+
+        //post new user to api
+        let url = "https://glacial-scrubland-15145.herokuapp.com/users"
+        Request.post(url)
+            .set('Content-Type', 'application/json')
+            .send({
+                name: this.props.data.data.me.displayName,
+                bitmoji_url: this.props.data.data.me.bitmoji.avatar,
+                username: this.state.snap_username,
+                image: this.state.personal_photo
+            })
+            .then(res => console.log("success!"));
         
         event.target.reset();
         //make api post request for:
