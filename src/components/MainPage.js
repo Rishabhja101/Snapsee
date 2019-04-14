@@ -8,13 +8,17 @@ class MainPage extends React.Component {
             isNewUser: true,
             users: null,
             snap_username: '',
-            personal_photo: null
+            personal_photo: null,
+            imageToClassify: null
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.postFormOnSubmit = this.postFormOnSubmit.bind(this);
         this.handleImageChange = this.handleImageChange.bind(this);
-        this.API_URL = "http://snapsee.herokuapp.com";
+        this.imageUploadChange = this.imageUploadChange.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
+        
+        this.API_URL = "https://snapsee.herokuapp.com";
     }
 
     api(path) {
@@ -54,7 +58,7 @@ class MainPage extends React.Component {
                 username: this.state.snap_username,
                 image: null
             })
-            .then(() => Request.post(this.api('user/update'))
+            .then(() => Request.post(this.api('user/update/'))
                 .field('username', this.state.snap_username)
                 .attach('image', this.state.personal_photo)
                 .then(() => {})
@@ -80,6 +84,21 @@ class MainPage extends React.Component {
         this.setState({
             [event.target.name]: event.target.files[0]
         });
+    }
+
+    imageUploadChange(event){
+        this.setState({
+            imageToClassify: event.target.files[0]
+        });
+    }
+
+    uploadImage(event){
+        event.preventDefault();
+        //make post request to facial recognition api
+        Request.post(this.api('image/match/'))
+            .field('username', this.state.snap_username)
+            .attach('image', this.state.imageToClassify)
+            .then((res) => {console.log(res)});
     }
 
     render(){
@@ -110,11 +129,11 @@ class MainPage extends React.Component {
                     <h2 className="display-4">Welcome back to Snapsee <span style={{color: 'yellow'}}>{this.props.data.data.me.displayName}</span></h2>
                     <img className="mb-4" src={this.props.data.data.me.bitmoji.avatar} alt="bitmoji of user"/>
         
-                    <form action="/" method="get">
+                    <form action="/" method="get" onSubmit={this.uploadImage}>
                         <label htmlFor="image-upload" className="lead">
                             Upload an image of desired friends' face
                         </label><br/>
-                        <input required type="file" accept="image/*" id="image-upload"/>
+                        <input required type="file" accept="image/*" id="image-upload" onChange={this.imageUploadChange}/>
                         <button type="submit" value="submit">Upload Image</button>
                     </form>
                 </div>
