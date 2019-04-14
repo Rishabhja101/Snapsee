@@ -31,7 +31,7 @@ class LoginPage extends React.Component {
     render() {
         return (
           <div className="text-center">
-            <img src="https://66.media.tumblr.com/1844b1112b107102601a6c300de4e37f/tumblr_ppxs61zEAB1yn6gjno1_540.png" alt="snapsee logo banner" style={{width: "100vw"}} />
+            <img src="https://66.media.tumblr.com/1844b1112b107102601a6c300de4e37f/tumblr_ppxs61zEAB1yn6gjno1_540.png" alt="snapsee logo banner" style={{"width": "80%"}} />
             <h2 className="lead my-4">One click snap adding.</h2>
             <div id="login-button-target"/>
           </div>
