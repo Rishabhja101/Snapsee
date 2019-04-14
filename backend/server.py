@@ -5,7 +5,7 @@ from sqlalchemy.sql.functions import coalesce
 from flask import request, send_from_directory
 from flask.json import jsonify
 
-from backend import app
+from backend import app, faces
 from backend.database import db, User
 
 STATIC = Path(app.static_folder)
@@ -85,3 +85,8 @@ def user_get_column(colname):
     except Exception as e:
         return str(e), 400
     return jsonify(results), 200
+
+
+@app.route('/image/match', methods=['POST'])
+def match_image():
+    match_found = faces.match(get('image'))
