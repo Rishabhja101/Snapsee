@@ -37,6 +37,14 @@ class App extends React.Component {
       </BrowserRouter>
     );
   }
+
+  fug() {
+    let formData = new FormData();
+    let request = new XMLHttpRequest();
+    formData.append('image', document.getElementById('img').files[0]);
+    request.open('POST', '/test/image/');
+    request.send(formData);
+  }
 }
 
 export default App;

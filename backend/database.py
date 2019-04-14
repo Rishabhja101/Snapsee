@@ -21,3 +21,5 @@ class User(db.Model):
     username = db.Column(db.Text, unique=True)
     image = db.Column(db.LargeBinary)
 
+    def to_dict(self):
+        return {colname: getattr(self, colname) for colname in self.__table__.columns._data}

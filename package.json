@@ -1,6 +1,7 @@
 {
   "name": "snapsee",
   "version": "0.1.0",
+  "proxy": "localhost:8000",
   "private": true,
   "dependencies": {
     "react": "^16.8.6",
