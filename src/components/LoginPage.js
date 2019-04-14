@@ -15,7 +15,7 @@ class LoginPage extends React.Component {
             // Mount Login Button
             window.snap.loginkit.mountButton(loginButtonIconId, {
               clientId: '2fc5fe99-32c8-494c-b1f8-612b96613983',
-              redirectURI: 'http://localhost:3000/login',
+              redirectURI: 'https://wizardly-leakey-5e95d0.netlify.com/login',
               scopeList: [
                 'user.display_name',
                 'user.bitmoji.avatar',
