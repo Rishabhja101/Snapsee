@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
-from backend.server import app
+from backend import app
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (
   'postgres+psycopg2://'
@@ -14,8 +14,10 @@ db = SQLAlchemy(app)
 
 
 class User(db.Model):
+    __tablename__ = 'users'
     uid = db.Column(db.BigInteger, primary_key=True)
     name = db.Column(db.Text)
     bitmoji_url = db.Column(db.Text, unique=True)
     username = db.Column(db.Text, unique=True)
+    image = db.Column(db.LargeBinary)
 
